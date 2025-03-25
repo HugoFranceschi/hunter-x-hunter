@@ -1,56 +1,3 @@
-const main = document.querySelector("main");
-
-function LaCarte(image, nombre, nom, rank, description) {
-	const divCarte = document.createElement("div");
-	divCarte.classList.add("carte");
-
-	const divTitre = document.createElement("div");
-	divTitre.classList.add("titre");
-	const divPointiller1 = document.createElement("div");
-	divPointiller1.classList.add("pointiller");
-	const divPointiller2 = document.createElement("div");
-	divPointiller2.classList.add("pointiller");
-
-	const h2Numero = document.createElement("h2");
-	h2Numero.textContent = nombre;
-	const h3Nom = document.createElement("h3");
-	h3Nom.textContent = nom;
-	const h2Rareter = document.createElement("h2");
-	h2Rareter.textContent = rank;
-
-	const divImage = document.createElement("div");
-	divImage.classList.add("image");
-	const imgImage = document.createElement("img");
-	imgImage.src = image;
-
-	const divInfo = document.createElement("div");
-	divInfo.classList.add("info");
-	const divText = document.createElement("div");
-
-	const pText = document.createElement("p");
-	pText.textContent = description;
-
-	main.appendChild(divCarte);
-	divCarte.appendChild(divTitre);
-
-	divTitre.appendChild(divPointiller1);
-	divPointiller1.appendChild(h2Numero);
-
-	divTitre.appendChild(h3Nom);
-
-	divTitre.appendChild(divPointiller2);
-	divPointiller2.appendChild(h2Rareter);
-
-	divCarte.appendChild(divImage);
-	divImage.appendChild(imgImage);
-
-	divCarte.appendChild(divInfo);
-	divInfo.appendChild(divText);
-	divText.appendChild(pText);
-
-	return divCarte;
-}
-
 const cards = [
 	{
 		image: "assets/000.png",
@@ -853,13 +800,175 @@ const cards = [
 	},
 ];
 
+let main = document.querySelector("main");
+
+function LaCarte(image, nombre, nom, rank, description) {
+	const divCarte = document.createElement("div");
+	divCarte.classList.add("carte");
+
+	const divTitre = document.createElement("div");
+	divTitre.classList.add("titre");
+	const divPointiller1 = document.createElement("div");
+	divPointiller1.classList.add("pointiller");
+	const divPointiller2 = document.createElement("div");
+	divPointiller2.classList.add("pointiller");
+
+	const h2Numero = document.createElement("h2");
+	h2Numero.textContent = nombre;
+	const h3Nom = document.createElement("h3");
+	h3Nom.textContent = nom;
+	const h2Rareter = document.createElement("h2");
+	h2Rareter.textContent = rank;
+
+	const divImage = document.createElement("div");
+	divImage.classList.add("image");
+	const imgImage = document.createElement("img");
+	imgImage.src = image;
+
+	const divInfo = document.createElement("div");
+	divInfo.classList.add("info");
+	const divText = document.createElement("div");
+
+	const pText = document.createElement("p");
+	pText.textContent = description;
+
+	divCarte.appendChild(divTitre);
+
+	divTitre.appendChild(divPointiller1);
+	divPointiller1.appendChild(h2Numero);
+
+	divTitre.appendChild(h3Nom);
+
+	divTitre.appendChild(divPointiller2);
+	divPointiller2.appendChild(h2Rareter);
+
+	divCarte.appendChild(divImage);
+	divImage.appendChild(imgImage);
+
+	divCarte.appendChild(divInfo);
+	divInfo.appendChild(divText);
+	divText.appendChild(pText);
+
+	return divCarte;
+}
+
 for (let i = 0; i < cards.length; i++) {
-	LaCarte(
+	let nouvelleCarte = LaCarte(
 		cards[i].image,
 		cards[i].number,
 		cards[i].name,
 		cards[i].rank,
 		cards[i].description
 	);
+
+	main.appendChild(nouvelleCarte);
 }
-// LaCarte(image, nombre, nom, rank, description)
+
+const buttonFiltreAll = document.querySelector("#all");
+const buttonFiltreSS = document.querySelector("#ss-only");
+const buttonFiltreSSOrMore = document.querySelector("#ss-or-more");
+
+const buttonChoix = document.querySelectorAll(".choix");
+
+buttonFiltreAll.addEventListener("click", () => {
+	buttonFiltreAll.classList.add("choisi");
+	buttonFiltreSS.classList.remove("choisi");
+	buttonFiltreSSOrMore.classList.remove("choisi");
+
+	main.remove();
+
+	main = document.createElement("main");
+
+	document.body.appendChild(main);
+
+	for (let i = 0; i < cards.length; i++) {
+		let nouvelleCarte = LaCarte(
+			cards[i].image,
+			cards[i].number,
+			cards[i].name,
+			cards[i].rank,
+			cards[i].description
+		);
+
+		main.appendChild(nouvelleCarte);
+	}
+});
+
+buttonFiltreSS.addEventListener("click", () => {
+	buttonFiltreSS.classList.add("choisi");
+	buttonFiltreAll.classList.remove("choisi");
+	buttonFiltreSSOrMore.classList.remove("choisi");
+
+	main.remove();
+
+	main = document.createElement("main");
+
+	for (let i = 0; i < cards.length; i++) {
+		if (cards[i].rank.includes("SS")) {
+			let nouvelleCarte = LaCarte(
+				cards[i].image,
+				cards[i].number,
+				cards[i].name,
+				cards[i].rank,
+				cards[i].description
+			);
+
+			main.appendChild(nouvelleCarte);
+		}
+	}
+
+	document.body.appendChild(main);
+});
+
+buttonFiltreSSOrMore.addEventListener("click", () => {
+	buttonFiltreSSOrMore.classList.add("choisi");
+	buttonFiltreAll.classList.remove("choisi");
+	buttonFiltreSS.classList.remove("choisi");
+
+	main.remove();
+
+	main = document.createElement("main");
+
+	for (let i = 0; i < cards.length; i++) {
+		if (cards[i].rank.startsWith("S")) {
+			let nouvelleCarte = LaCarte(
+				cards[i].image,
+				cards[i].number,
+				cards[i].name,
+				cards[i].rank,
+				cards[i].description
+			);
+
+			main.appendChild(nouvelleCarte);
+		}
+	}
+
+	document.body.appendChild(main);
+});
+
+const input = document.getElementById("input");
+
+input.addEventListener("input", () => {
+	main.remove();
+
+	main = document.createElement("main");
+
+	for (let i = 0; i < cards.length; i++) {
+		if (
+			cards[i].name.toLowerCase().includes(input.value.toLowerCase()) ||
+			cards[i].number.includes(input.value)
+		) {
+			let nouvelleCarte = LaCarte(
+				cards[i].image,
+				cards[i].number,
+				cards[i].name,
+				cards[i].rank,
+				cards[i].description
+			);
+
+			main.appendChild(nouvelleCarte);
+		}
+	}
+
+	document.body.appendChild(main);
+});

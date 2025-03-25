@@ -9,16 +9,17 @@ main {
 	grid-template-columns: 1fr;
 	gap: 15px;
 	width: 100%;
+	justify-items: center;
 }
 
 h3 {
 	text-align: center;
 }
 
-hr {
-	border: solid 5px;
-	border-radius: 25px;
-	margin-bottom: 25px;
+input {
+	width: 100%;
+	padding-bottom: 15px;
+	margin-bottom: 15px;
 }
 
 h1 {
@@ -83,12 +84,41 @@ img {
 .info > div {
 	border-radius: 15px;
 	background-color: rgba(217, 217, 217, 1);
-	border: solid 10px black;
+	border: solid 5px black;
+}
+
+.la-liste-des-carte {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.button {
+	gap: 15px;
+	display: flex;
+	justify-content: center;
+}
+
+.choix {
+	padding: 5px 15px;
+	border-radius: 25px;
+	border: none;
+	color: white;
+	background-color: black;
+	font-family: "Kavivanar", cursive;
+}
+
+.choisi {
+	background-color: rgba(204, 82, 126, 1);
 }
 
 @media screen and (min-width: 441px) {
 	main {
 		grid-template-columns: 1fr 1fr 1fr;
+	}
+	.la-liste-des-carte {
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: baseline;
 	}
 }
 
